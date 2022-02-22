@@ -1,17 +1,27 @@
 {
-  "name": "backend-gym",
+  "name": "top-v16-backend",
   "version": "1.0.0",
-  "description": "\"API Rest para app-gym\"",
+  "description": "API Rest para e-commerce",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
-  "author": "team3-topv16",
+  "author": "Leonel Oliveros",
   "license": "MIT",
-  "dependencies": {
-    "express": "^4.17.3"
-  },
   "devDependencies": {
     "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cloudinary": "^1.28.1",
+    "composable-middleware": "^0.3.0",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.2.0",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.4"
   }
 }
