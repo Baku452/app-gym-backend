@@ -20,5 +20,5 @@ app.listen(PORT, () => {
   expressConfig(app)
   routes(app)
 
-  console.log('Server is running with express')
+  console.log('Server is running with express in port: ', PORT)
 })
