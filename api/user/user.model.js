@@ -3,15 +3,10 @@ const bcrypt = require('bcrypt')
 
 const UserSchema = new mongoose.Schema(
   {
-    firstName: {
-      type: String,
-      required: true,
-      lowercase: true
-    },
-    lastName: {
+    user_name: {
       type: String,
       lowercase: true,
-      required: true
+      require: true,
     },
     password: {
       type: String,
@@ -21,20 +16,72 @@ const UserSchema = new mongoose.Schema(
     email: {
       type: String,
       unique: true,
-      require: true
-    },
-    age: {
-      type: Number
-    },
-    role: {
-      type: String,
-      default: 'Admin',
+      require: true,
+      trim: true
     },
     status: {
       type: String,
       default: 'Pending',
       enum: ['Deleted', 'Active', 'Pending'],
       required: true
+    },
+    role: {
+      type: String,
+      default: 'GUEST',
+    },
+    identity_document: {
+      type: String,
+      enum: ['DNI', 'RUC', 'EXTRANJERIA'],
+      lowercase: true
+    },
+    identity_number: {
+      type: String,
+      lowercase: true
+    },
+    names: {
+      type: String,
+      lowercase: true
+    },
+    primary_lastName: {
+      type: String,
+      lowercase: true,
+    },
+    second_lastName: {
+      type: String,
+      lowercase: true,
+    },
+    full_name: {
+      type: String,
+      lowercase: true,
+    },
+    slug: {
+      type: String,
+      lowercase: true,
+    },
+    presentation: {
+      type: String,
+      lowercase: true,
+    },
+    url_photo: {
+      type: String,
+      lowercase: true,
+    },
+    url_banner: {
+      type: String,
+      lowercase: true,
+    },
+    gender: {
+      type: String,
+      lowercase: true,
+    },
+    email_alternative: {
+      type: String,
+      trim: true,
+      lowercase: true,
+    },
+    phone: {
+      type: String,
+      lowercase: true,
     },
     passwordResetToken: String,
     passwordResetExpires: Date
