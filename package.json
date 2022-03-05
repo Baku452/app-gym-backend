@@ -1,14 +1,14 @@
 {
-  "name": "top-v16-backend",
+  "name": "trackg_backend",
   "version": "1.0.0",
-  "description": "API Rest para e-commerce",
+  "description": "API Rest para TrackG",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
-  "author": "Leonel Oliveros",
+  "author": "Aldair Huamani & Tony Ojeda",
   "license": "MIT",
   "devDependencies": {
     "nodemon": "^2.0.15"
