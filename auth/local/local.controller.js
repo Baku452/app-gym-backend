@@ -33,10 +33,17 @@ async function changePasswordHandler(req, res){
       return res.status(400).json({ message: "User not found" })
     }
     const isMatch = await user.comparePassword(password)
-
+    console.log(isMatch);
     if (!isMatch) {
-      user.changePassword()
-      return res.status(200).json({ message: "password changed"})
+      const newPassword = await user.changePassword(password);
+      const updatedInfo = {
+        password: newPassword
+      }
+      console.log(user.id);
+      const userUpdated = await User.findByIdAndUpdate(user.id, updatedInfo, { new:true })
+      return res.status(200).json(userUpdated)
+    }else{
+      return res.status(500).json({ message: "Cannot use the same password"})
     }
 
   }  catch(error) {

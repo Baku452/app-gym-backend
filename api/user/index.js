@@ -11,7 +11,7 @@ router.get('/:id', isAuthenticated, getUserById)
 //Post
 router.post('/', createUser)
 //Modify
-router.put('/:id', isAuthenticated, updateUser)
+router.put('/:id', updateUser)
 //Delete
 router.delete('/:id', isAuthenticated, deleteUser)
 

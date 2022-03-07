@@ -5,7 +5,7 @@ const router = Router()
 
 
 router.post('/login', loginUserHandler)
-router.post('/change-password', changePasswordHandler)
+router.put('/change-password', changePasswordHandler)
 router.post('/register', loginUserHandler)
 router.post('/verify-email', loginUserHandler)
 

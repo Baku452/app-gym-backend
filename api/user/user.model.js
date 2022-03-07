@@ -71,7 +71,6 @@ UserSchema.pre('save', async function(next) {
     }
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hash(user.password, salt)
-    console.log(hash);
     user.password = hash
 
   } catch(error) {
@@ -87,7 +86,7 @@ UserSchema.methods.comparePassword = async function (password) {
 
 UserSchema.methods.changePassword = async function (password){
   const user = this;
-  user.password = password;
+  return await bcrypt.hash(password, 10);
 }
 
 UserSchema.virtual('profile').get(function() {
