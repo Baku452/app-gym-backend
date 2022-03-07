@@ -2,8 +2,6 @@ const User = require('./user.model')
 
 async function getAllUsers(req, res) {
   const { status } = req.query
-  console.log("🚀 ~ file: user.controller.js ~ line 5 ~ getAllUsers ~ status", status)
-  //llegamos
   try {
     const users = await User.find({ }) 
     res.status(200).json({ users })

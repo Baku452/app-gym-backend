@@ -12,7 +12,6 @@ function signToken(payload) {
 }
 
 function isAuthenticated() {
-  console.log('holii');
   return compose().use(async (req, res, next) => {
     const authHeader = req.headers?.authorization
     console.log('Llego aqui')

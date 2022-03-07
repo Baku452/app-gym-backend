@@ -3,20 +3,25 @@ const bcrypt = require('bcrypt')
 
 const UserSchema = new mongoose.Schema(
   {
-    user_name: {
+    firstName: {
       type: String,
       lowercase: true,
-      require: true,
+      required: true
+    },
+    lastName: {
+      type: String,
+      lowercase: true,
+      required: true
     },
     password: {
       type: String,
-      require: true,
+      required: true,
       trim: true
     },
     email: {
       type: String,
       unique: true,
-      require: true,
+      required: true,
       trim: true
     },
     status: {
@@ -29,36 +34,8 @@ const UserSchema = new mongoose.Schema(
       type: String,
       default: 'GUEST',
     },
-    identity_document: {
-      type: String,
-      enum: ['DNI', 'RUC', 'EXTRANJERIA'],
-      lowercase: true
-    },
-    identity_number: {
-      type: String,
-      lowercase: true
-    },
-    names: {
-      type: String,
-      lowercase: true
-    },
-    primary_lastName: {
-      type: String,
-      lowercase: true,
-    },
-    second_lastName: {
-      type: String,
-      lowercase: true,
-    },
-    full_name: {
-      type: String,
-      lowercase: true,
-    },
+  
     slug: {
-      type: String,
-      lowercase: true,
-    },
-    presentation: {
       type: String,
       lowercase: true,
     },
@@ -72,11 +49,6 @@ const UserSchema = new mongoose.Schema(
     },
     gender: {
       type: String,
-      lowercase: true,
-    },
-    email_alternative: {
-      type: String,
-      trim: true,
       lowercase: true,
     },
     phone: {
@@ -94,28 +66,28 @@ const UserSchema = new mongoose.Schema(
 UserSchema.pre('save', async function(next) {
   const user = this
   try {
-    if (!user.isModified('password') || !user.isModified('creditCardNumber') ) {
+    if (!user.isModified('password')) {
       return next()
     }
-  
-    //Generar el hash y encriptar la contraseña
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hash(user.password, salt)
-
+    console.log(hash);
     user.password = hash
 
   } catch(error) {
     next(error)
   }
-  
-
-  console.log('user', user)
   next()
 })
 
 UserSchema.methods.comparePassword = async function (password) {
   const user = this
   return await bcrypt.compare(password, user.password)
+}
+
+UserSchema.methods.changePassword = async function (password){
+  const user = this;
+  user.password = password;
 }
 
 UserSchema.virtual('profile').get(function() {

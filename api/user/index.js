@@ -1,13 +1,18 @@
 const { Router } = require('express');
-const { getAllUsers, getUserById, createUser, updateUser, deleteUser, getUserByEmail, loginUserHandler } = require('./user.controller')
+const { getAllUsers, getUserById, createUser, updateUser, deleteUser} = require('./user.controller')
 const { isAuthenticated } = require('../../auth/auth.services') 
 const router = Router()
 
+//Login
 //CRUD
+//GET
 router.get('/', getAllUsers)
 router.get('/:id', isAuthenticated, getUserById)
+//Post
 router.post('/', createUser)
+//Modify
 router.put('/:id', isAuthenticated, updateUser)
+//Delete
 router.delete('/:id', isAuthenticated, deleteUser)
 
 
