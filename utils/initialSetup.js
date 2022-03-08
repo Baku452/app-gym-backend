@@ -12,9 +12,8 @@ async function createRoles(){
             new Role({name: "admin"}).save(),
         ]);
 
-        console.log(values)
     } catch(error){
-        console.log(error)
+        console.error('Error: ',error)
     }
 }
 

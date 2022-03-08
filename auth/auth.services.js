@@ -1,7 +1,7 @@
 const jsonwebtoken = require('jsonwebtoken')
 const { getUserByEmail } = require('../api/user/user.service')
 const compose = require('composable-middleware')
-const { createProduct } = require('../api/product/product.controller')
+const { createProduct } = require('../api/business_object/business_object.controller')
 
 function signToken(payload) {
   const token = jsonwebtoken.sign(payload, 'private_key', {
@@ -14,7 +14,6 @@ function signToken(payload) {
 function isAuthenticated() {
   return compose().use(async (req, res, next) => {
     const authHeader = req.headers?.authorization
-    console.log('Llego aqui')
   
     if (!authHeader) {
       return res.status(401).json({ message: 'Unauthorized' })

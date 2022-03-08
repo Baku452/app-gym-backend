@@ -3,7 +3,11 @@ const bcrypt = require('bcrypt')
 
 const UserSchema = new mongoose.Schema(
   {
+<<<<<<< Updated upstream
     firstName: {
+=======
+    userName: {
+>>>>>>> Stashed changes
       type: String,
       lowercase: true,
       required: true
@@ -34,6 +38,9 @@ const UserSchema = new mongoose.Schema(
       type: String,
       default: 'GUEST',
     },
+<<<<<<< Updated upstream
+  
+=======
     identityDocument: {
       type: String,
       enum: ['DNI', 'RUC', 'EXTRANJERIA'],
@@ -43,15 +50,36 @@ const UserSchema = new mongoose.Schema(
       type: String,
       lowercase: true
     },
+    names: {
+      type: String,
+      lowercase: true
+    },
+    primaryLastName: {
+      type: String,
+      lowercase: true,
+    },
+    secondLastName: {
+      type: String,
+      lowercase: true,
+    },
+    fullName: {
+      type: String,
+      lowercase: true,
+    },
+>>>>>>> Stashed changes
     slug: {
       type: String,
       lowercase: true,
     },
+<<<<<<< Updated upstream
+    url_photo: {
+=======
     presentation: {
       type: String,
       lowercase: true,
     },
     urlPhoto: {
+>>>>>>> Stashed changes
       type: String,
       lowercase: true,
     },
@@ -63,11 +91,14 @@ const UserSchema = new mongoose.Schema(
       type: String,
       lowercase: true,
     },
+<<<<<<< Updated upstream
+=======
     emailAlternative: {
       type: String,
       trim: true,
       lowercase: true,
     },
+>>>>>>> Stashed changes
     phone: {
       type: String,
       lowercase: true,
@@ -107,9 +138,9 @@ UserSchema.methods.changePassword = async function (password){
 }
 
 UserSchema.virtual('profile').get(function() {
-  const { firstName, lastName, email } = this
+  const { userName, email } = this
 
-  return { fullName: `${firstName} ${lastName}`, email }
+  return { fullName: `${userName}`, email }
 })
 
 module.exports = mongoose.model('User', UserSchema)

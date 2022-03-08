@@ -1,4 +1,4 @@
-const Product = require('./product.model')
+const Product = require('./business_object.model')
 
 async function getAllProducts(req, res) {
   const { page, limit, find } = req.query
@@ -11,7 +11,7 @@ async function getAllProducts(req, res) {
     const product = await Product.find({ name: findValue}, { name: 1, description: 1}).skip(skip).limit(limit)
     res.status(200).json(product)
   } catch(err) {
-    console.log(err)
+    console.error(err)
     res.status(400).json({ error: err})
   }
 }
@@ -23,7 +23,7 @@ async function getProductById(req, res) {
     const product = await Product.findById(id) 
     res.status(200).json(product)
   } catch(err) {
-    console.log(err)
+    console.error(err)
     res.status(400).json({ error: err})
   }
 }
@@ -31,13 +31,12 @@ async function getProductById(req, res) {
 async function createProduct(req, res) {
   const info = req.body;
   const user = req.user
-  console.log("🚀 ~ file: product.controller.js ~ line 28 ~ createProduct ~ info", user)
   
   try {
     const product = await Product.create({ ...info, userData: { user, role: user.role} })
     res.status(200).json(product)
   } catch(err) {
-    console.log(err)
+    console.error(err)
     res.status(400).json({ error: err})
   } 
 }
@@ -49,7 +48,7 @@ async function updateProduct(req, res) {
     const product = await Product.findByIdAndUpdate(id, info, { new: true })
     res.status(200).json(product)
   } catch(err) {
-    console.log(err)
+    console.error(err)
     res.status(400).json({ error: err})
   }
 }

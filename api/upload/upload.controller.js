@@ -18,7 +18,7 @@ async function uploadHandler(req, res) {
   //chunks // asociar una imagen, algun dato de DB
   return res.status(200).json(result)
  } catch (err) {
-  console.log(err)
+  console.error(err)
  } finally {
   fs.unlinkSync(file.path)
  }
@@ -26,7 +26,6 @@ async function uploadHandler(req, res) {
 
 async function uploadMultipleFileHandler(req, res) {
  const { files } = req
- console.log(files)
 
  const results = []
 
@@ -42,7 +41,7 @@ async function uploadMultipleFileHandler(req, res) {
    // asociar una imagen, algun dato de DB
    results.push(result)
   } catch (err) {
-   console.log(err)
+   console.error(err)
   } finally {
    fs.unlinkSync(file.path)
   }

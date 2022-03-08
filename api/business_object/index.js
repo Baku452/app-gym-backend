@@ -6,7 +6,7 @@ const {
   createProduct,
   updateProduct,
   deleteProduct
-} = require('./product.controller')
+} = require('./business_object.controller')
 
 const router = Router()
 
