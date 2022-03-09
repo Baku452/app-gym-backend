@@ -1,21 +1,22 @@
 const { Router } = require('express');
 const { isAuthenticated, hasRole } = require('../../auth/auth.services');
 const { 
-  getAllProducts,
-  getProductById,
-  createProduct,
-  updateProduct,
-  deleteProduct
+  getAllBusinessObjects,
+  getBusinessObjectById,
+  createBusinessObject,
+  updateBusinessObject,
+  deleteBusinessObject
 } = require('./business_object.controller')
 
 const router = Router()
 
 //CRUD
-router.get('/', getAllProducts)
-router.get('/:id', isAuthenticated(), getProductById)
-router.post('/', hasRole(['Developer', 'Admin']), createProduct)
-router.put('/:id', updateProduct)
-router.delete('/:id', hasRole('Developer'), deleteProduct)
+router.get('/', isAuthenticated(), getAllBusinessObjects)
+router.get('/:id', isAuthenticated(), getBusinessObjectById)
+// router.post('/', hasRole(['Developer', 'Admin']), createBusinessObject)
+router.post('/',isAuthenticated(), createBusinessObject)
+router.put('/:id', updateBusinessObject)
+router.delete('/:id', hasRole('Developer'), deleteBusinessObject)
 
 
 module.exports = router

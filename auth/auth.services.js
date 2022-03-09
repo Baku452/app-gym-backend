@@ -52,9 +52,9 @@ function hasRole(roles) {
     .use(isAuthenticated())
     .use(async (req, res, next)=> {
       const { user } = req
-      if (!roles.includes(user.role))  {
-        return res.status(403).json({ message: 'forbidden' })
-      } 
+
+      if (!roles.includes(user.role))  return res.status(403).json({ message: 'forbidden' });
+       
       next()   
     })
 }

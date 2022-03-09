@@ -5,17 +5,12 @@ const BusinessObjectSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
-      lowercase: true
+      lowercase: true,
     },
-    product_type: {
-      type: String
-    },
-    user_id: {
+    business_object_type: {
       type: String,
-      required: true
-    },
-    presentation_content: {
-      type: String
+      enum: ['product','course','blog'],
+      required: true,
     },
     content: {
       type: String
@@ -44,6 +39,7 @@ const BusinessObjectSchema = new mongoose.Schema(
       user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
+        required: true,
       },
       role: {
         type: String,
@@ -58,4 +54,4 @@ const BusinessObjectSchema = new mongoose.Schema(
 )
 
 
-module.exports = mongoose.model('BusinessOject', BusinessObjectSchema)
+module.exports = mongoose.model('BusinessObject', BusinessObjectSchema)

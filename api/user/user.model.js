@@ -26,17 +26,18 @@ const UserSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      default: 'Pending',
-      enum: ['Deleted', 'Active', 'Pending'],
+      default: 'pending',
+      enum: ['deleted', 'active', 'pending'],
       required: true
     },
     role: {
       type: String,
-      default: 'GUEST',
+      enum: ['guest','user','trainer','admin'],
+      default: 'guest',
     },
     identityDocument: {
       type: String,
-      enum: ['DNI', 'RUC', 'EXTRANJERIA'],
+      enum: ['dni', 'ruc', 'foreigner'],
       lowercase: true
     },
     identityNumber: {
