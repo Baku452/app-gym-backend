@@ -36,13 +36,11 @@ async function createUser(req, res, next) {
 
 async function updateUser(req, res) {
   const { id } = req.params
-  console.log(id);
   const info = req.body;
   try {
     const user = await User.findByIdAndUpdate(id, info, { new: true })
     res.status(200).json(user)
   } catch(err) {
-    console.log(err)
     res.status(400).json({ error: err})
   }
 }
