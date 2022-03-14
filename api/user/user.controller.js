@@ -1,4 +1,5 @@
 const User = require('./user.model')
+const Role = require('../role/role.model')
 
 async function getAllUsers(req, res) {
   const { status } = req.query
@@ -23,10 +24,24 @@ async function getUserById(req, res) {
 }
 
 async function createUser(req, res, next) {
-  const info = req.body;
+  const { username, firstName, lastName, password, email, roles } = req.body;
   try {
-    const user = await User.create(info)
-    return res.status(200).json(user)
+    const user = new User({
+      username, 
+      firstName, 
+      lastName, 
+      password, 
+      email
+    })
+    if(roles){
+      const foundRoles = await Role.find({name: {$in: roles}});
+      user.roles = foundRoles.map(role => role._id);
+    }else{
+      const role = await Role.findOne({name: "user"});
+      user.roles = [role._id];
+    }
+    const userSaved = await User.create(user);
+    return res.status(200).json(userSaved)
     
   } catch(err) {
     console.log(err)
