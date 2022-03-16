@@ -3,6 +3,10 @@ const bcrypt = require('bcrypt')
 
 const UserSchema = new mongoose.Schema(
   {
+    username: {
+      type: String,
+      unique: true
+    },
     firstName: {
       type: String,
       lowercase: true,
@@ -55,6 +59,12 @@ const UserSchema = new mongoose.Schema(
       type: String,
       lowercase: true,
     },
+    roles: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Role"
+      }
+    ],
     passwordResetToken: String,
     passwordResetExpires: Date
   },
