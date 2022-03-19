@@ -13,10 +13,11 @@ async function uploadHandler(req, res) {
  try {
   // enviar nuestro archivo a cloudinary
   cloudinary.uploader.destroy()
-  const result = await cloudinary.uploader.upload(file.path)
+   const result = await cloudinary.uploader.upload(file.path, { folder: 'app-gym/product' })
   // const result = await cloudinary.uploader.upload_stream(file.path)
   //chunks // asociar una imagen, algun dato de DB
   return res.status(200).json(result)
+
  } catch (err) {
   console.error(err)
  } finally {
@@ -33,17 +34,17 @@ async function uploadMultipleFileHandler(req, res) {
   const size = file.size / 1024 / 1024
 
   if (size > 5) {
-   return res.status(500).json({ message: "File size is too long" })
+    return res.status(500).json({ message: "File size is too long" })
   }
   try {
-   // enviar nuestro archivo a cloudinary
-   const result = await cloudinary.uploader.upload(file.path)
-   // asociar una imagen, algun dato de DB
-   results.push(result)
+    // enviar nuestro archivo a cloudinary
+    const result = await cloudinary.uploader.upload(file.path,{ folder: 'app-gym/product' })
+    // asociar una imagen, algun dato de DB
+    results.push(result)
   } catch (err) {
-   console.error(err)
+    console.error(err)
   } finally {
-   fs.unlinkSync(file.path)
+    fs.unlinkSync(file.path)
   }
  }
 

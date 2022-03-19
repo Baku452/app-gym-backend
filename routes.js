@@ -1,6 +1,7 @@
 const user = require('./api/user')
 const pkg = require('./package.json')
 const businessObject = require('./api/business_object')
+const upload = require('./api/upload')
 const auth = require('./auth/local')
 
 function routes(app) {
@@ -13,8 +14,10 @@ function routes(app) {
       version: app.get('pkg').version
     })
   })
+
   app.use('/api/v1/users', user)
   app.use('/api/v1/business-objects', businessObject),
+    app.use('/api/v1/uploads', upload),
   app.use('/api/v1/auth', auth)
 }
 
