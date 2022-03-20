@@ -1,4 +1,5 @@
 const { signToken } = require('../auth.services')
+const { findUser } = require('../../api/user/user.service')
 const User = require('../../api/user/user.model')
 
 async function loginUserHandler(req, res) {
@@ -49,11 +50,32 @@ async function changePasswordHandler(req, res){
   }
 }
 
-function verifyToken(req, res) {
-  //;;
+async function verifyAccount(req, res) {
+  const { hash } = req.params
+  try {
+    const user = await findUser({ passwordResetToken: hash, status: 'pending' })
+
+    if (!user) return res.status(404).json({message: "Token not found"});
+
+    if (Date.now() > user.passwordResetExpires) return res.status(404).json({message: "Token expired"});
+
+    user.status = "active"
+    user.passwordResetExpires = null
+    user.passwordResetToken = null
+
+    await user.save()
+
+    const token = signToken(user.profile)
+
+    res.status(200).json({token})
+
+  } catch(err) {
+    console.error("Error: ",err)
+  }
 }
 
 module.exports = {
+  verifyAccount,
   loginUserHandler,
   changePasswordHandler
 }

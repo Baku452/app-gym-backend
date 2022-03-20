@@ -5,8 +5,14 @@ async function getUserByEmail(email) {
   return user
 }
 
+async function findUser(query) {
+  const user = await User.findOne( query ) || {}
+  return user
+}
+
 module.exports = {
-  getUserByEmail
+  getUserByEmail,
+  findUser,
 }
 
 
