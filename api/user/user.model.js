@@ -34,20 +34,11 @@ const UserSchema = new mongoose.Schema(
       enum: ['Deleted', 'Active', 'Pending'],
       required: true
     },
-    role: {
-      type: String,
-      default: 'GUEST',
-    },
-  
     slug: {
       type: String,
       lowercase: true,
     },
     url_photo: {
-      type: String,
-      lowercase: true,
-    },
-    url_banner: {
       type: String,
       lowercase: true,
     },
