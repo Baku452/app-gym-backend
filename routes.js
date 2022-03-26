@@ -1,6 +1,7 @@
 const user = require('./api/user')
 const pkg = require('./package.json')
 const businessObject = require('./api/business_object')
+const session = require('./api/session')
 const upload = require('./api/upload')
 const auth = require('./auth/local')
 
@@ -16,8 +17,9 @@ function routes(app) {
   })
 
   app.use('/api/v1/users', user)
+  app.use('/api/v1/sessions', user)
   app.use('/api/v1/business-objects', businessObject),
-    app.use('/api/v1/uploads', upload),
+  app.use('/api/v1/uploads', upload),
   app.use('/api/v1/auth', auth)
 }
 
