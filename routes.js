@@ -17,7 +17,7 @@ function routes(app) {
 
   app.use('/api/v1/users', user)
   app.use('/api/v1/business-objects', businessObject),
-    app.use('/api/v1/uploads', upload),
+  app.use('/api/v1/uploads', upload),
   app.use('/api/v1/auth', auth)
 }
 

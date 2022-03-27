@@ -2,9 +2,9 @@ const { signToken } = require('../auth.services')
 const User = require('../../api/user/user.model')
 
 async function loginUserHandler(req, res) {
-  const { email, password } = req.body
+  const { username, password } = req.body
   try {
-    const user = await User.findOne({ email })
+    const user = await User.findOne({ username })
     if (!user) {
       return res.status(400).json({ message: "User not found" })
     }
@@ -27,6 +27,7 @@ async function loginUserHandler(req, res) {
 
 async function changePasswordHandler(req, res){
   const {email, password} = req.body;
+  console.log(req.body)
   try{
     const user = await User.findOne({ email })
     if (!user) {
