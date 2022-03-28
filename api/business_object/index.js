@@ -11,12 +11,16 @@ const {
 const router = Router()
 
 //CRUD
-router.get('/', isAuthenticated(), getAllBusinessObjects)
-router.get('/:id', isAuthenticated(), getBusinessObjectById)
+// router.get('/', isAuthenticated(), getAllBusinessObjects)
+router.get('/', getAllBusinessObjects)
+// router.get('/:id', isAuthenticated(), getBusinessObjectById)
+router.get('/:id', getBusinessObjectById)
 // router.post('/', hasRole(['Developer', 'Admin']), createBusinessObject)
-router.post('/',isAuthenticated(), createBusinessObject)
+// router.post('/',isAuthenticated(), createBusinessObject)
+router.post('/', createBusinessObject)
 router.put('/:id', updateBusinessObject)
-router.delete('/:id', hasRole('Developer'), deleteBusinessObject)
+// router.delete('/:id', hasRole('Developer'), deleteBusinessObject)
+router.delete('/:id', deleteBusinessObject)
 
 
 module.exports = router
