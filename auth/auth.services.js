@@ -12,15 +12,12 @@ function signToken(payload) {
 }
 
 function isAuthenticated() {
+
   return compose().use(async (req, res, next) => {
     const authHeader = req.headers?.authorization
-  
     if (!authHeader) {
       return res.status(401).json({ message: 'Unauthorized' })
     }
-  
-    // proceder a validar que el token no se haya expirado
-    //const token = authHeader.split(' ')[1] //1
     const [, token] = authHeader.split(' ')
     const payload = await validateToken(token)
     if (!payload) {
@@ -40,7 +37,7 @@ function isAuthenticated() {
 
 async function validateToken(token) {
   try {
-    const payload = await jsonwebtoken.verify(token, 'private_key')
+    const payload = await jsonwebtoken.verify(token, process.env.SECRET_KEY_JWT)
     return payload
   } catch(err) {
     return null

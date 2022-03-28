@@ -14,6 +14,7 @@ async function getAllUsers(req, res) {
 
 async function getUserById(req, res) {
   const { id } = req.params;
+  console.log("LLegue");
   try {
     const user = await User.findById(id);
     res.status(200).json(user);
@@ -45,7 +46,6 @@ async function createUser(req, res, next) {
     return res.status(200).json(userSaved)
     
   } catch(err) {
-    console.log(err)
     res.status(400).json({ error: err})
   } 
 }
@@ -53,7 +53,13 @@ async function createUser(req, res, next) {
 async function updateUser(req, res) {
   const { id } = req.params
   const info = req.body;
+  const {roles} = req.body;
   try {
+
+    if(roles){
+      const foundRoles = await Role.find({name: {$in: roles}})
+      info.roles = foundRoles
+    }
     const user = await User.findByIdAndUpdate(id, info, { new: true })
     res.status(200).json(user)
   } catch(err) {
