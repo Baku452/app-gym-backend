@@ -35,17 +35,17 @@ const BusinessObjectSchema = new mongoose.Schema(
       required: true,
       lowercase: true
     },
-    userData: {
-      user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
-      },
-      role: {
-        type: String,
-        required: true
-      }
-    },
+    // userData: {
+    //   user: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'User',
+    //     required: true,
+    //   },
+    //   role: {
+    //     type: String,
+    //     required: true
+    //   }
+    // },
     
   },
   {

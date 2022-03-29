@@ -4,7 +4,7 @@ const compose = require('composable-middleware')
 const { createProduct } = require('../api/business_object/business_object.controller')
 
 function signToken(payload) {
-  const token = jsonwebtoken.sign(payload, 'private_key', {
+  const token = jsonwebtoken.sign(payload, process.env.SECRET_KEY_JWT, {
     expiresIn: '1h'
   })
 

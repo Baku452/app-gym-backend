@@ -34,20 +34,6 @@ const UserSchema = new mongoose.Schema(
       enum: ['deleted', 'active', 'pending'],
       required: true
     },
-    role: {
-      type: String,
-      enum: ['guest','user','trainer','admin'],
-      default: 'guest',
-    },
-    identityDocument: {
-      type: String,
-      enum: ['dni', 'ruc', 'foreigner'],
-      lowercase: true
-    },
-    identityNumber: {
-      type: String,
-      lowercase: true
-    },
     slug: {
       type: String,
       lowercase: true,
@@ -57,10 +43,6 @@ const UserSchema = new mongoose.Schema(
       lowercase: true,
     },
     urlPhoto: {
-      type: String,
-      lowercase: true,
-    },
-    urlBanner: {
       type: String,
       lowercase: true,
     },
