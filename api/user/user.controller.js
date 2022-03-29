@@ -1,5 +1,8 @@
+require('dotenv').config();
 const User = require('./user.model')
 const Role = require('../role/role.model')
+const { sendEmail } = require('../../utils/email')
+const crypto = require("crypto")
 
 async function getAllUsers(req, res) {
   const { status } = req.query;
@@ -25,29 +28,56 @@ async function getUserById(req, res) {
 }
 
 async function createUser(req, res, next) {
-  const { username, firstName, lastName, password, email, roles } = req.body;
   try {
 
-    const user = new User({
-      username, 
-      firstName, 
-      lastName, 
-      password, 
-      email
-    })
-    if(roles){
-      const foundRoles = await Role.find({name: {$in: roles}});
-      user.roles = foundRoles.map(role => role._id);
-    }else{
-      const role = await Role.findOne({name: "user"});
-      user.roles = [role._id];
-    }
+    const user = await prepareUser(req.body)
+
     const userSaved = await User.create(user);
+
+    const email = {
+      to: userSaved.email,
+      subject: "Activate your account",
+      template_id: "d-165d013d46d940b8a62e69237da50921",
+      dynamic_template_data: {
+        name: user.firstName,
+        url: `${process.env.APP_URL}/activate/${user.passwordResetToken}`
+      }
+    }
+
+    sendEmail(email); 
     return res.status(200).json(userSaved)
     
   } catch(err) {
     res.status(400).json({ error: err})
   } 
+}
+
+async function prepareUser({ username, firstName, lastName, email, password, roles }) {
+  let assingRols = [];
+
+  if(roles){
+    const foundRoles = await Role.find({name: {$in: roles}});
+    assingRols = foundRoles.map(role => role._id);
+  }else{
+    const role = await Role.findOne({name: "user"});
+    assingRols = [role._id];
+  }
+
+  const passwordResetToken = crypto
+      .createHash('sha256')
+      .update(email)
+      .digest('hex');
+
+  return new User({
+    username, 
+    firstName, 
+    lastName, 
+    email,
+    password, 
+    roles: assingRols, 
+    passwordResetToken,
+    passwordResetExpires: Date.now() + 3600000 + 24,
+  })
 }
 
 async function updateUser(req, res) {
