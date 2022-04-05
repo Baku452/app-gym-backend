@@ -39,7 +39,7 @@ async function createUser(req, res, next) {
       template_id: "d-165d013d46d940b8a62e69237da50921",
       dynamic_template_data: {
         name: user.firstName,
-        url: `${process.env.APP_URL}/auth/verify-email/${user.passwordResetToken}`
+        url: `${process.env.APP_URL}/activate/${user.passwordResetToken}`
       }
     }
 
@@ -62,7 +62,7 @@ async function prepareUser({ username, firstName, lastName, email, password, rol
     assingRols = [role._id];
   }
 
-  const verifyAccountToken = crypto
+  const passwordResetToken = crypto
       .createHash('sha256')
       .update(email)
       .digest('hex');
@@ -74,8 +74,8 @@ async function prepareUser({ username, firstName, lastName, email, password, rol
     email,
     password, 
     roles: assingRols, 
-    verifyAccountToken,
-    verifyAccountExpires: Date.now() + 3600000 + 24,
+    passwordResetToken,
+    passwordResetExpires: Date.now() + 3600000 + 24,
   })
 }
 

@@ -39,7 +39,6 @@ async function createBusinessObject(req, res) {
   info.slug = await setSlug(info.name);
   
   try {
-    // const businessObject = await BusinessObject.create({ ...info, userData: { user, role: user.role} })
     const businessObject = await BusinessObject.create({ ...info})
     res.status(200).json(businessObject)
   } catch(err) {

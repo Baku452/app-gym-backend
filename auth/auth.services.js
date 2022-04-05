@@ -2,6 +2,7 @@ const jsonwebtoken = require('jsonwebtoken')
 const { getUserByEmail } = require('../api/user/user.service')
 const compose = require('composable-middleware')
 const { createProduct } = require('../api/business_object/business_object.controller')
+const Role = require('../api/role/role.model');
 
 function signToken(payload) {
   const token = jsonwebtoken.sign(payload, process.env.SECRET_KEY_JWT, {
@@ -49,9 +50,9 @@ function hasRole(roles) {
     .use(isAuthenticated())
     .use(async (req, res, next)=> {
       const { user } = req
-
-      if (!roles.includes(user.role))  return res.status(403).json({ message: 'forbidden' });
-       
+      const rolesUser = await Role.find({ _id: { $in: user.roles } });
+      const rolesName = rolesUser.map(item => item.name)
+      if(!roles.some(item=> rolesName.includes(item))) return res.status(403).json({ message: 'forbidden' });
       next()   
     })
 }
