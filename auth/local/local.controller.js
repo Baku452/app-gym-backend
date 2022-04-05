@@ -59,15 +59,15 @@ async function changePasswordHandler(req, res){
 async function verifyAccount(req, res) {
   const { hash } = req.params
   try {
-    const user = await findUser({ passwordResetToken: hash, status: 'pending' })
+    const user = await findUser({ verifyAccountToken: hash, status: 'pending' })
 
     if (!user) return res.status(404).json({message: "Token not found"});
 
     if (Date.now() > user.passwordResetExpires) return res.status(404).json({message: "Token expired"});
 
     user.status = "active"
-    user.passwordResetExpires = null
-    user.passwordResetToken = null
+    user.verifyAccountExpires = null
+    user.verifyAccountToken = null
 
     await user.save()
 
