@@ -65,8 +65,10 @@ const UserSchema = new mongoose.Schema(
         ref: "Role"
       }
     ],
+    verifyAccountToken: String,
+    verifyAccountExpires: Date,
     passwordResetToken: String,
-    passwordResetExpires: Date
+    passwordResetExpires: Date,
   },
   {
     timestamps: true
