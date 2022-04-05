@@ -34,10 +34,10 @@ async function getBusinessObjectById(req, res) {
 
 async function createBusinessObject(req, res) {
   const info = req.body;
-  const user = req.user
+  // const user = req.user
+  console.log(info);
   
   try {
-    // const businessObject = await BusinessObject.create({ ...info, userData: { user, role: user.role} })
     const businessObject = await BusinessObject.create({ ...info})
     res.status(200).json(businessObject)
   } catch(err) {

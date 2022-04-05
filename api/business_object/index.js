@@ -11,6 +11,7 @@ const {
 const router = Router()
 
 //CRUD
+router.post('/products', hasRole(['admin']), createBusinessObject)
 // router.get('/', isAuthenticated(), getAllBusinessObjects)
 router.get('/', getAllBusinessObjects)
 // router.get('/:id', isAuthenticated(), getBusinessObjectById)
@@ -22,5 +23,7 @@ router.put('/:id', updateBusinessObject)
 // router.delete('/:id', hasRole('Developer'), deleteBusinessObject)
 router.delete('/:id', deleteBusinessObject)
 
+//Products
+// router.get('/products/', getAllBusinessObjects)
 
 module.exports = router
