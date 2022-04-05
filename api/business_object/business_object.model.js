@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const slugify = require('slugify')
 
 const BusinessObjectSchema = new mongoose.Schema(
   {
@@ -18,7 +19,7 @@ const BusinessObjectSchema = new mongoose.Schema(
     slug: {
       type: String
     },
-    url_photo: {
+    url_image: {
       type: String
     },
     url_video: {
@@ -52,6 +53,5 @@ const BusinessObjectSchema = new mongoose.Schema(
     timestamps: true
   }
 )
-
 
 module.exports = mongoose.model('BusinessObject', BusinessObjectSchema)

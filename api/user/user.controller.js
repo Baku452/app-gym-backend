@@ -17,7 +17,6 @@ async function getAllUsers(req, res) {
 
 async function getUserById(req, res) {
   const { id } = req.params;
-  console.log("LLegue");
   try {
     const user = await User.findById(id);
     res.status(200).json(user);
