@@ -36,6 +36,14 @@ const BusinessObjectSchema = new mongoose.Schema(
       required: true,
       lowercase: true
     },
+    price: {
+      type: Number,
+      default: 0
+    },
+    quantity: {
+      type: Number,
+      default: 0
+    }
     // userData: {
     //   user: {
     //     type: mongoose.Schema.Types.ObjectId,
