@@ -2,15 +2,18 @@ const BusinessObject = require('./business_object.model')
 const slugify = require('slugify')
 
 async function getAllBusinessObjects(req, res) {
-  const { page, limit, search, type = '' } = req.query
+  const { page, limit, search, slug, business_object_type } = req.query
 
-  const skip = limit * ( page - 1)
+  const skip = limit * ( page - 1);
+  const query = {};
+  business_object_type ? query["business_object_type"] = business_object_type : '';
+  slug ? query["slug"] = slug : '';
 
   try {
 
     const searchValue = new RegExp(search, "gi") || undefined
     // const businessObject = await BusinessObject.find({'userData.role': 'Admin'},{ name: findValue}, { name: 1, description: 1}).skip(skip).limit(limit)
-    const businessObject = await BusinessObject.find({type, $or: [{ name: searchValue }, { description: searchValue }] })
+    const businessObject = await BusinessObject.find({...query, $or: [{ name: searchValue }, { description: searchValue }] })
       // .populate('userData.user', '_id firstName lastName email')
       .skip(skip)
       .limit(limit);
