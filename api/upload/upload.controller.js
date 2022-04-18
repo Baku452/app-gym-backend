@@ -2,23 +2,28 @@ const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
 
 async function uploadHandler(req, res) {
-  const { file } = req;
+  const { file,  body } = req;
+
   let storedPath = "general";
 
   const size = file.size / 1024 / 1024;
 
-  if (size > 5) return res.status(500).json({ message: "File size is too long" });
+  if (file.mimetype.startsWith("image/") && size > 5) return res.status(500).json({ message: "File size is too long" });
   
 
-  const isImage = file.mimetype.startsWith("image/");
-  if (isImage) storedPath = "blog";
-  
+  if (file.mimetype.startsWith("image/")) storedPath = "images/";
+  if (file.mimetype.startsWith("video/")) storedPath = "videos/";
+
+  if ( body.target == "blog") storedPath+="blogs";
+  if ( body.target == "course") storedPath+="courses";
+  if ( body.target == "product") storedPath+="products";
 
   try {
     // enviar nuestro archivo a cloudinary
     cloudinary.uploader.destroy();
     const result = await cloudinary.uploader.upload(file.path, {
       folder: `app-gym/${storedPath}`,
+      resource_type: 'auto'
     });
     // const result = await cloudinary.uploader.upload_stream(file.path)
     //chunks // asociar una imagen, algun dato de DB
