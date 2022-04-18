@@ -18,6 +18,7 @@ async function uploadHandler(req, res) {
   if ( body.target == "course") storedPath+="courses";
   if ( body.target == "product") storedPath+="products";
 
+
   try {
     // enviar nuestro archivo a cloudinary
     cloudinary.uploader.destroy();
