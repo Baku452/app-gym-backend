@@ -16,7 +16,9 @@ async function getAllBusinessObjects(req, res) {
     const businessObject = await BusinessObject.find({...query, $or: [{ name: searchValue }, { description: searchValue }] })
       // .populate('userData.user', '_id firstName lastName email')
       .skip(skip)
-      .limit(limit);
+      .limit(limit)
+      .sort({ createdAt: 'desc'});
+      
     res.status(200).json(businessObject)
   } catch(err) {
     console.error(err)
@@ -53,7 +55,7 @@ async function createBusinessObject(req, res) {
 async function setSlug(name) {
   if (name) {
     try {
-      let slug = await slugify(name);
+      let slug = await slugify(name, { lower: true, trim: true });
       const find = await BusinessObject.findOne({ slug })
       if (find) {
         let index = 1;

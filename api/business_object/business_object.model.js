@@ -25,6 +25,9 @@ const BusinessObjectSchema = new mongoose.Schema(
     url_video: {
       type: String
     },
+    video_public_id: {
+      type: String
+    },
     url_banner: {
       type: String
     },
