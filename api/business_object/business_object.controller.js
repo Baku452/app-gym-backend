@@ -26,6 +26,23 @@ async function getAllBusinessObjects(req, res) {
   }
 }
 
+async function getProducts(req, res) {
+  const { page, limit, search, slug } = req.query
+
+  const skip = limit * ( page - 1);
+
+  try {
+
+    const products = await BusinessObject.find({business_object_type: 'product'})
+      .skip(skip)
+      .limit(limit)
+      .sort({ createdAt: 'desc'});
+      
+    res.status(200).json(products)
+  } catch(err) {
+    res.status(400).json({ error: err})
+  }
+}
 
 async function getBusinessObjectById(req, res) {
   const { id } = req.params
@@ -100,6 +117,7 @@ async function deleteBusinessObject(req, res) {
 
 
 module.exports = {
+  getProducts,
   getAllBusinessObjects,
   getBusinessObjectById,
   createBusinessObject,

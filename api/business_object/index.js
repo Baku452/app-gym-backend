@@ -5,13 +5,16 @@ const {
   getBusinessObjectById,
   createBusinessObject,
   updateBusinessObject,
-  deleteBusinessObject
+  deleteBusinessObject,
+  getProducts
 } = require('./business_object.controller')
 
 const router = Router()
 
 //CRUD
-router.post('/products', hasRole(['admin']), createBusinessObject)
+router.post('/products', createBusinessObject)
+router.get('/products', getProducts)
+
 // router.get('/', isAuthenticated(), getAllBusinessObjects)
 router.get('/', getAllBusinessObjects)
 // router.get('/:id', isAuthenticated(), getBusinessObjectById)

@@ -3,7 +3,6 @@ const fs = require("fs");
 
 async function uploadHandler(req, res) {
   const { file,  body } = req;
-
   let storedPath = "general";
 
   const size = file.size / 1024 / 1024;
@@ -29,8 +28,8 @@ async function uploadHandler(req, res) {
     // const result = await cloudinary.uploader.upload_stream(file.path)
     //chunks // asociar una imagen, algun dato de DB
     return res.status(200).json(result);
-  } catch (err) {
-    console.error(err);
+    } catch (err) {
+    return res.status(400).json({error: "File not saved"});
   } finally {
     fs.unlinkSync(file.path);
   }
