@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 const slugify = require('slugify')
 
+const randomIntFromInterval = (min, max) =>  { 
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
 const BusinessObjectSchema = new mongoose.Schema(
   {
     name: {
@@ -46,23 +50,33 @@ const BusinessObjectSchema = new mongoose.Schema(
     quantity: {
       type: Number,
       default: 0
-    }
-    // userData: {
-    //   user: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'User',
-    //     required: true,
-    //   },
-    //   role: {
-    //     type: String,
-    //     required: true
-    //   }
-    // },
+    },
+    score: {
+      type: Number,
+      default: 0
+    },
+    userData: {
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+      },
+      role: {
+        type: String,
+        required: true
+      }
+    },
     
   },
   {
     timestamps: true
   }
 )
+
+BusinessObjectSchema.pre('save', async function(next) {
+  const businessObject = this;
+  businessObject.score = randomIntFromInterval(1,5);
+  next();
+})
 
 module.exports = mongoose.model('BusinessObject', BusinessObjectSchema)

@@ -50,7 +50,10 @@ function hasRole(roles) {
     .use(isAuthenticated())
     .use(async (req, res, next)=> {
       const { user } = req
+      // TODO: de esta forma solo trabajamos para un usuario que tenga un solo rol
       const rolesUser = await Role.find({ _id: { $in: user.roles } });
+      req.role = rolesUser[0].name; // al momento de registrar blog, curso, product se requiere el nombre del rol
+      console.log(req.role);
       const rolesName = rolesUser.map(item => item.name)
       if(!roles.some(item=> rolesName.includes(item))) return res.status(403).json({ message: 'forbidden' });
       next()   
