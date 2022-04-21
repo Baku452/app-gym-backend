@@ -102,9 +102,9 @@ UserSchema.methods.changePassword = async function (password){
 }
 
 UserSchema.virtual('profile').get(function() {
-  const { firstName, lastName, email } = this
+  const { firstName, lastName, email, _id } = this
 
-  return { fullName: `${firstName} ${lastName}`, email }
+  return { fullName: `${firstName} ${lastName}`, email, _id }
 })
 
 module.exports = mongoose.model('User', UserSchema)

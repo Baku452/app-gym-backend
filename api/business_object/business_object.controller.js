@@ -2,11 +2,12 @@ const BusinessObject = require('./business_object.model')
 const slugify = require('slugify')
 
 async function getAllBusinessObjects(req, res) {
-  const { page, limit, search, slug, business_object_type } = req.query
+  const { page, limit, search, slug, business_object_type, userData } = req.query
 
   const skip = limit * ( page - 1);
   const query = {};
   business_object_type ? query["business_object_type"] = business_object_type : '';
+  userData ? query["userData.user"] = JSON.parse(userData).user : '';
   slug ? query["slug"] = slug : '';
 
   try {
@@ -58,7 +59,13 @@ async function getBusinessObjectById(req, res) {
 async function createBusinessObject(req, res) {
   const info = req.body;
   const user = req.user
+  const role = req.role
+  console.log('user is: ', user)
   info.slug = await setSlug(info.name);
+  info.userData = {
+    user: user._id,
+    role,
+  }
   
   try {
     const businessObject = await BusinessObject.create({ ...info})

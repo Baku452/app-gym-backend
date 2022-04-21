@@ -4,6 +4,7 @@ const businessObject = require('./api/business_object')
 const session = require('./api/session')
 const upload = require('./api/upload')
 const auth = require('./auth/local')
+const { hasRole } = require('./auth/auth.services')
 
 function routes(app) {
   app.set('pkg', pkg)
@@ -18,7 +19,7 @@ function routes(app) {
 
   app.use('/api/v1/users', user)
   app.use('/api/v1/sessions', user)
-  app.use('/api/v1/business-objects', businessObject),
+  app.use('/api/v1/business-objects',hasRole(['instructor','admin','user']), businessObject),
   app.use('/api/v1/uploads', upload),
   app.use('/api/v1/auth', auth)
 }
