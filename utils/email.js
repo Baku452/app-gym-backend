@@ -10,10 +10,9 @@ async function sendEmail(data) {
   sgMail.setApiKey(process.env.SEND_GRID_API_KEY)
 
   const msg = {
-    from: process.env.MAIL_FROM_ADDRESS,
     to: data.to,
+    from: process.env.MAIL_FROM_ADDRESS,
     subject: data.subject,
-    // template_id: "d-165d013d46d940b8a62e69237da50921",
     template_id: data.template_id,
     dynamic_template_data: data.dynamic_template_data
   }
@@ -21,7 +20,7 @@ async function sendEmail(data) {
   try {
     await sgMail.send(msg)
   } catch(err) {
-    console.error("Error: ",err)
+    console.error("Error sendGrid: ",err)
   }
 }
 
